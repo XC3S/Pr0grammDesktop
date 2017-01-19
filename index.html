@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>pr0gramm Deskt0p</title>
+
+    <link rel="stylesheet" type="text/css" href="libs/bootstrap/css/bootstrap.min.css">
+    <style type="text/css">
+      .col-2 > object {
+        width: 100%;
+      }
+
+      .col-2 > .grid-image {
+        width: 100%;
+        height: 10vw;
+        background-size: cover;
+
+        margin: 15px 0;
+      }
+
+      .background-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0,0,0,0.5);
+        
+        z-index: 100;
+        display: inline-block;
+      }
+
+      .background-overlay > object {
+        text-align: center;
+        float: none;
+      }
+    </style>
+  </head>
+  <body ng-app="pr0gramm">
+    <!--
+    <h1>Hello World!</h1>
+    We are using node <script>document.write(process.versions.node)</script>,
+    Chrome <script>document.write(process.versions.chrome)</script>,
+    and Electron <script>document.write(process.versions.electron)</script>.
+    <br><br>
+    -->
+    
+
+    <div class="container-fluid">
+      <div ng-controller="pr0grammController" class="row">
+        <!-- active overlay--> 
+        <div ng-if="isPostActive()" ng-click="setActivePost(null)" class="background-overlay">
+          <object data="http://img.pr0gramm.com/{{getActivePost().image}}" type="image/jpg"></object>
+        </div>
+
+        <!-- image list -->
+        <div ng-repeat="post in getImagePosts()" class="col-2">
+          <!--
+          <img ng-src="http://img.pr0gramm.com/{{post.thumb}}">   
+          <object data="http://thumb.pr0gramm.com/{{post.thumb}}" type="image/jpg"></object>
+          -->
+          <div  class="grid-image" 
+                style="background-image: url('http://thumb.pr0gramm.com/{{post.thumb}}')"
+                ng-click="setActivePost(post)">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    
+    <script src="libs/tether/dist/js/tether.min.js"></script>
+    <script src="libs/jquery/jquery.min.js"></script>
+    <script src="libs/bootstrap/js/bootstrap.min.js"></script>
+    <script src="libs/angular/angular.min.js"></script>
+    <script src="application/pr0gramm.module.js"></script>
+    <script src="application/pr0gramm.service.js"></script>
+    <script src="application/pr0gramm.controller.js"></script>
+
+    <script>if (window.module) module = window.module;</script>
+
+    <script type="text/javascript">
+      var shell = require('electron').shell;
+      $(document).on('click', 'a[href^="http"]', function(event) {
+          event.preventDefault();
+          shell.openExternal(this.href);
+      });
+    </script>
+  </body>
+</html>
